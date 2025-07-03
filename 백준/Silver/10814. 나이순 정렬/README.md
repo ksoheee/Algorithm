@@ -28,3 +28,25 @@
 
  <p>첫째 줄부터 총 N개의 줄에 걸쳐 온라인 저지 회원을 나이 순, 나이가 같으면 가입한 순으로 한 줄에 한 명씩 나이와 이름을 공백으로 구분해 출력한다.</p>
 
+### 풀이 1
+<p>String[][]2차원 배열을 통해 각 배열에 나이와 이름을 저장한 뒤, 나이 순으로 정렬하는 방법</p>
+<p>Arrays.sort()에 Comparatordml compare메소드를 구현하여 사용자 정렬을 사용해서 쓸 수 있다. 즉, 나이 순으로 정렬하되, 나이가 같을 경우는 0 이반환되어 자연스레 입력순으로 정렬된다. 람다식으로도 풀이 가능</p>
+
+### 풀이 2
+<p>배열을 이용하지 않고 클래스 객체를 만들어 배열처럼 사용하는 방법</p>
+<p>Person클래스를 만들어서 나이와 이름을 변수로 받는 생성자를 만들고, 이 Person 클래스를 하나의 타입(=객체타입)으로 하여 배열을 생성해준 뒤, 해당 객체의 나이끼리 비교하여 정렬해주는 방식이다. 이 방식 또한 정렬 방법은 Arrays.sort()를 확장하여 정렬할 수 있다. toString()메서드는 객체를 출력할 때, 사용자의 읨의로 출력하고자 하는 문자열을 지정할 수 있다.</p>
+
+### 풀이 3
+<p>StringBuilder을 배열처럼 사용하여 Counting sort형태로 사용할 수 있다.</p>
+<p>나이는 1이상 200이하이므로 201개의 StringBuilder배열을 만들면 된다. 위의 2번처럼 StringBuilder객체를 하나의 타입으로 받아서 사용할 수 있다. 또한 2번에 비해 더 좋은 점은 문자열을 append()하여 문자를 이을 수 있기 때문에 우리가 카운팅 정렬을 하듯이 나이를 기준으로 배열에 입력받으면서, 같은 나이일 경우 이미 해당 인덱스에 존재하던 문자열 뒤에 append()하여 이어주기만 하면 성능 측면에서도 매우 좋아진다. </p>
+
+### 방법
+<p>방법 1 : [String[][] + Scanner + System.out.println]</p>
+<p>방법 1-1:  [String[][] + Scanner + System.out.println]+람다식</p>
+<p>방법 2 : [String[][] + Scanner + StringBuilder]</p>
+<p>방법 3 : [Person[] + Scanner + StringBuilder] </p>
+<p>방법 4 ; [StringBuilder[] + Scanner + StringBuilder]</p>
+
+ ![image](https://github.com/user-attachments/assets/831431c7-3f07-410a-b9fe-0bb60e037dcd)
+
+
