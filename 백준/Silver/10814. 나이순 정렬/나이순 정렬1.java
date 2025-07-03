@@ -1,3 +1,4 @@
+//방법 1 : [String[][] + Scanner + System.out.println]
 import java.util.*;import java.util.Scanner;
 public class Main{
     public static void main(String[] args) {
