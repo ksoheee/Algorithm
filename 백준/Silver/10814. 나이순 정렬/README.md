@@ -47,6 +47,16 @@
 <p>방법 3 : [Person[] + Scanner + StringBuilder] </p>
 <p>방법 4 ; [StringBuilder[] + Scanner + StringBuilder]</p>
 
+### 비교
+| 방법 번호   | 데이터 구조                  | 출력 방식                                          | 정렬 방식                                          | 장점                                                                                                  | 단점                                         |
+| ------- | ----------------------- | ---------------------------------------------- | ---------------------------------------------- | --------------------------------------------------------------------------------------------------- | ------------------------------------------ |
+| **1**   | `String[][]`            | `for` 루프 안에서 `System.out.println`              | `Arrays.sort(String[][], Comparator)` (익명 클래스) | - 가장 간단한 형태<br>- 바로바로 출력해서 메모리 부담 적음                                                                | - 출력 호출(`println`)이 N번 발생 → I/O 오버헤드 큼     |
+| **1-1** | `String[][]`            | `for` + `println`                              | `Arrays.sort(..., (a,b)->…)` (람다)              | - 익명 클래스보다 간결한 정렬 코드<br>- 가독성↑                                                                      | - 여전히 N번 `println`<br>- 데이터는 단순 2차원 배열 형태  |
+| **2**   | `String[][]`            | `StringBuilder`에 모아서 한 번에 `System.out.println` | 익명 클래스                                         | - I/O 호출 횟수 1회로 줄여서 속도↑<br>- 코드 수정 시 출력 로직 집중 관리 가능                                                 | - 출력용 `StringBuilder`를 위한 추가 메모리 사용        |
+| **3**   | `Person[]` (객체 배열)      | `StringBuilder` 모아서 한 번에 출력                    | `Arrays.sort(Person[], Comparator)`            | - `Person` 클래스에 `age`, `name` 필드를 명확히 분리<br>- OOP 원칙 준수<br>- 확장성↑<br>- `toString()` 오버라이드로 출력 형식 통일 | - 객체 생성 오버헤드 (new Person)                  |
+| **4**   | `StringBuilder[]` (라인별) | `StringBuilder` 배열을 합쳐서 출력                     | 익명 클래스                                         | - 각 줄을 `StringBuilder` 자체로 저장 → 개별 문자열 빌드 빠름                                                        | - `StringBuilder` 객체 N개 생성 → 메모리·GC 오버헤드 큼 |
+
+
  ![image](https://github.com/user-attachments/assets/831431c7-3f07-410a-b9fe-0bb60e037dcd)
 
 
