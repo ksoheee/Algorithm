@@ -39,6 +39,7 @@
 <p>입출력 방법</p>
 <p>1. BufferedReader + StringTokenizer : 대량 입력에도 빠르게 동작,복잡</p>
 <p>2. Scanner : 느림, 간결</p>
+
 ![image](https://github.com/user-attachments/assets/06ead9c5-2b1d-45f0-9dd4-8a72024fe02d)
 
 <p>정렬 방법(내림차순)</p>
