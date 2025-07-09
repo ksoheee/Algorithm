@@ -32,3 +32,14 @@
 
  <p>현재 회사에 있는 사람의 이름을 사전 순의 역순으로 한 줄에 한 명씩 출력한다.</p>
 
+### 풀이 
+<p>HashMap key 값에 이름들을 넣고 만약에 key 값이 한번 더 나온다면 그 key값을 HashMap에서 삭제한다. value값을 비교할 필요가 없는 이유는 동일한 key값이 두번 나왔으면 무조건 출근 후 퇴근 한 것이므로 key값 포함 여부만 확인하면 된다.
+그리고 나서 ArrayList에 넣어서 사전 순의 역순으로 정렬을 해준 후 출력을 하면된다.</p>
+
+<p>입출력 방법</p>
+<p>1. BufferedReader + StringTokenizer : 대량 입력에도 빠르게 동작,복잡</p>
+<p>2. Scanner : 느림, 간결</p>
+<p>정렬 방법(내림차순)</p>
+<p>1. List.sort + 람다 : arr.sort((o1,o2)->o2.compareTo(o1));</p>
+<p>2.Collections.sort + 람다: Collections.sort(arr, (o1,o2)-> o2.compareTo(o1));</p>
+<p>3.Collections.sort + reverseOrder(): Collections.sort(arr, Collections.reverseOrder());</p>
