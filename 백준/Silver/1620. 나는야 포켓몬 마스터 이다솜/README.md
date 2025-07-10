@@ -137,7 +137,7 @@
 <p>이게 오박사님이 나에게 새로 주시려고 하는 도감이야. 너무 가지고 싶다ㅠㅜ. 꼭 만점을 받아줬으면 좋겠어!! 파이팅!!!</p>
 
 ### 풀이 
-<samp>
+<pre><code>
      Scanner sc = new Scanner(System.in);
     int n= sc.nextInt();
     int m= sc.nextInt();
@@ -154,7 +154,7 @@
             System.out.println(po.get(Integer.parseInt(test)));
         }
     }
-</samp>
+                   </code></pre>
  
  <p>기존 작성 코드 시간 초과 이유 : po.contains(test)와 po.indexOf(test) 둘 다 내부에서 순차 탐색을 하므로, 리스트 크기가 크면 매번 O(n)이 걸려 비효율적</p>
 
