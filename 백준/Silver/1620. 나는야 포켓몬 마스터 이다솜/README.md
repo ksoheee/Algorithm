@@ -136,3 +136,25 @@
 
 <p>이게 오박사님이 나에게 새로 주시려고 하는 도감이야. 너무 가지고 싶다ㅠㅜ. 꼭 만점을 받아줬으면 좋겠어!! 파이팅!!!</p>
 
+### 풀이 
+<pre><code>
+     Scanner sc = new Scanner(System.in);
+    int n= sc.nextInt();
+    int m= sc.nextInt();
+    sc.nextLine();
+    ArrayList<String> po= new ArrayList<>();
+    for(int i=0; i<n; i++){//포켓몬 도감 입력
+        po.add(sc.nextLine());
+    }
+    for(int i=0; i<m; i++){
+        String test= sc.nextLine();
+        if(po.contains(test)){
+            System.out.println(po.indexOf(test));
+        }else{
+            System.out.println(po.get(Integer.parseInt(test)));
+        }
+    }
+<pre><code>
+ <p>기존 작성 코드 시간 초과 이유 : po.contains(test)와 po.indexOf(test) 둘 다 내부에서 순차 탐색을 하므로, 리스트 크기가 크면 매번 O(n)이 걸려 비효율적</p>
+
+ <p>hashMap은 key를 통해 value는 뽑아낼 수 있지만 value를 통해  key를 뽑아낼 수 는 없으므로, 이름을 key로 담을 hashMap, 번호를 key로 담을 hashMap 두개를 만든다. </p>
