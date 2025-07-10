@@ -154,7 +154,7 @@
             System.out.println(po.get(Integer.parseInt(test)));
         }
     }
-</code></m>pre>
+</code></pre>
  
  <p>기존 작성 코드 시간 초과 이유 : po.contains(test)와 po.indexOf(test) 둘 다 내부에서 순차 탐색을 하므로, 리스트 크기가 크면 매번 O(n)이 걸려 비효율적</p>
 
