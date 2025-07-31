@@ -1,34 +1,32 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 public class Main{
-    public static void main(String[] args)throws IOException{
+    public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st;
-        st = new StringTokenizer(br.readLine());
-        int n=Integer.parseInt(st.nextToken());
-        int m=Integer.parseInt(st.nextToken());
-        
-        Map<String,Integer> map = new HashMap<>();
-        
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+
+        Map<String, Integer> map = new HashMap<>();
         for(int i=0; i<n; i++){
-            map.put(br.readLine(),i);
+            map.put(br.readLine(),1);
         }
         List<String> list = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
-        int cnt=0;
+        int cnt =0;
         for(int i=0; i<m; i++){
-            String nh= br.readLine();
-            if(map.containsKey(nh)){
+            String t=br.readLine();
+            if(map.containsKey(t)){
+                list.add(t);
                 cnt++;
-                list.add(nh);
-                
             }
         }
         Collections.sort(list);
-         System.out.println(cnt);
-        for(String name : list){
-            sb.append(name).append('\n');
+        System.out.println(cnt);
+        for(int i=0; i<cnt; i++){
+            sb.append(list.get(i)).append("\n");
         }
-        System.out.print(sb);
+        System.out.println(sb);
     }
+
 }
