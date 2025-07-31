@@ -29,6 +29,7 @@
 
  ### 성능
  <img width="721" height="192" alt="image" src="https://github.com/user-attachments/assets/b0e415bb-70dc-486d-856b-7c32faba18aa" />
-1. Scanner
+ </br>
+1. Scanner </br>
 2. BufferedReader + StringTokenizer 
 
