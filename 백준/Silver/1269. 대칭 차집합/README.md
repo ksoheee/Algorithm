@@ -27,3 +27,8 @@
 
  <p>첫째 줄에 대칭 차집합의 원소의 개수를 출력한다.</p>
 
+ ### 성능
+ <img width="721" height="192" alt="image" src="https://github.com/user-attachments/assets/b0e415bb-70dc-486d-856b-7c32faba18aa" />
+1. Scanner
+2. BufferedReader + StringTokenizer 
+
