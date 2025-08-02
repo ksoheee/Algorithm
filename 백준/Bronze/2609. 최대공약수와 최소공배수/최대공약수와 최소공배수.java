@@ -1,20 +1,24 @@
 import java.util.*;
-
+import java.io.*;
 public class Main{
-    public static void main(String[] args){
-        Scanner sc = new Scanner(System.in);
+    public static void main(String[] args)throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine()," ");
         
-        int a = sc.nextInt();
-        int b = sc.nextInt();
+        int a= Integer.parseInt(st.nextToken());
+        int b= Integer.parseInt(st.nextToken());
         
-        int d = gcd(a,b);
+        int c= gcd(a,b);
         
-        System.out.println(d);
-        System.out.println(a*b/d);             
+        System.out.println(c);
+        System.out.println(a*b/c);
     }
-    
     public static int gcd(int a, int b){
-        if(b ==0) return a;
-        return gcd(b,a%b);
+        while(b!=0){
+            int r=a%b;
+            a=b;
+            b=r;
+        }
+        return a;
     }
 }
