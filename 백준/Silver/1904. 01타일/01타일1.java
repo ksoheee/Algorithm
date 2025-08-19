@@ -6,24 +6,19 @@ public class Main{
     public static void main(String[] args)throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
+        dp[0]=0;
+        dp[1]=1;
+        dp[2]=2;
+        for(int i=3; i<dp.length; i++){
+            dp[i]=-1;
+        }
         System.out.print(tile(N));
     }
     public static int tile(int v){
-        if(v==1){
-            return 1;
+        if(dp[v]== -1){
+            return dp[v]=(tile(v-1)+tile(v-2))% 15746;
         }
-        if(v==2){
-            return 2;
-        }
-        int val1= 1;
-        int val2 =2;
-        int sum=0;
-        for(int i=2; i<v; i++){
-            sum=(val1+val2) % 15746;
-            val1=val2;
-            val2=sum;
-        }
-        return sum;
+        return dp[v];
     }
     
 }
