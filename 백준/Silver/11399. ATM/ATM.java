@@ -16,10 +16,11 @@ public class Main {
         }
         Arrays.sort(arr); //오름차순 정렬
         int sum = 0;
+        int pre = 0;
         for(int i=0; i<N; i++){
-            for(int j=0; j<=i; j++){
-                sum += arr[j];
-            }
+            sum += pre + arr[i];
+            
+            pre += arr[i];
         }
         System.out.println(sum);
     }
