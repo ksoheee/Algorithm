@@ -1,13 +1,12 @@
 class Solution {
     public long solution(int w, int h) {
-        long totalBox = (long)w*(long)h;        
-        
-        return totalBox - (w+h - gcd(w,h));
-    }
-    public long gcd(int w, int h){
-
-        if(h==0) return w;
-        return gcd(h,w%h);
+        long x = (long)w;
+        long y = (long)h;
+        long answer = 0;
+        for(int i=1; i<w; i++){
+            answer += y*i/x;
+        }
+        return answer*2;
     }
     
 }
