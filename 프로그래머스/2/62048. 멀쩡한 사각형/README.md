@@ -69,6 +69,8 @@ b,c가 서로소이므로 b×c 사각형에서 대각선이 지나가는 단위�
 b+c-1이고
 m×n 사각형 전체적으로 보면
 a(b+c-1) = ab+ac-a = m+n-a 입니다.
+
+참고 : <a href>https://m.blog.naver.com/PostView.nhn?blogId=zzinuhelios&logNo=120024685950&proxyReferer=https:%2F%2Fwww.google.com%2F</a>
 </pre>
 
 <pre>2. 좌표를 가지고 일차함수를 구한다. 그림은 기울기가 음수이지만, 기울기가 양수인 일차함수를 구하면 y=ax+b
