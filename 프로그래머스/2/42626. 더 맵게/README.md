@@ -70,3 +70,9 @@ Leo가 가진 음식의 스코빌 지수를 담은 배열 scoville과 원하는 
 
 
 > 출처: 프로그래머스 코딩 테스트 연습, https://school.programmers.co.kr/learn/challenges
+
+
+### 풀이
+<pre>
+덱으로 풀려고 했지만, 덱으로 앞쪽에 삽입하면 정렬이 유지가 안된다. 그러므로 우선순위 큐를 이용해야 한다.
+</pre>
