@@ -14,20 +14,20 @@ class Solution {
         
         for(int[] wire : wires){
             visited = new boolean[n+1];
-            int cnt = bfs(wire[0],wire[0],wire[1]);
+            int cnt = dfs(wire[0],wire[0],wire[1]);
             int other = n - cnt;
             answer = Math.min(answer, Math.abs(cnt - other));
         }
         return answer;
     }
-    static int bfs(int cur, int cur1, int cur2){
+    static int dfs(int cur, int cur1, int cur2){
         visited[cur] = true;
         int cnt =1;
         
         for(int next: graph[cur]){
             if(!visited[next]){
                 if((cur == cur1 && next == cur2) ||(cur == cur2 && next == cur1) ) continue;
-                cnt += bfs(next,cur1,cur2);
+                cnt += dfs(next,cur1,cur2);
             }
         }    
         return cnt;
