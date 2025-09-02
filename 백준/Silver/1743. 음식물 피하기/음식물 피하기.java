@@ -25,7 +25,7 @@ public class Main {
         cnt=1;
         for(int i=1; i<=N; i++){
             for(int j=1; j<=M; j++) {
-                if (food[i][j] == 1) {
+                if (food[i][j] == 1 && !visited[i][j]) {
                     cnt = Math.max(dfs(i, j), cnt);
                 }
             }
