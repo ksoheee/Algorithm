@@ -25,31 +25,23 @@ public class Main {
                 }
             }
         }
-        int cnt = bfs(x,y);
+        int cnt = dfs(x,y);
         if(cnt==0) System.out.println("TT");
-        else System.out.println(bfs(x,y));
+        else System.out.println(dfs(x,y));
     }
-    static int bfs(int x, int y){
+    static int dfs(int x, int y){
         visited[x][y]=true;
-        Queue<int[]> q = new LinkedList<>();
-        q.offer(new int[]{x,y});
+        if(arr[x][y].equals("P")) cnt++;
 
-        while(!q.isEmpty()) {
-            int now[] = q.poll();
-            int nowX = now[0];
-            int nowY = now[1];
-            for(int i=0; i<4; i++){
-                int nextX = nowX + dx[i];
-                int nextY = nowY + dy[i];
+        for(int i=0; i<4; i++){
+            int nextX = x + dx[i];
+            int nextY = y + dy[i];
 
-                if(nextX>=N || nextX<0 || nextY>=M || nextY<0) continue;
-                if(visited[nextX][nextY]) continue;
-                if(arr[nextX][nextY].equals("X")) continue; //벽
-                if(arr[nextX][nextY].equals("P")) cnt++;
-                q.offer(new int[]{nextX,nextY});
-                visited[nextX][nextY]=true;
-            }
-        }
+            if(nextX>=N || nextX<0 || nextY>=M || nextY<0) continue;
+            if(visited[nextX][nextY]) continue;
+            if(arr[nextX][nextY].equals("X")) continue; //벽
+            dfs(nextX,nextY);    
+        }      
         return cnt;
     }
 }
