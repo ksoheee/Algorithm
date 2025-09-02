@@ -24,19 +24,25 @@ public class Main {
             tree.get(a).add(b);
             tree.get(b).add(a);
         }
-        dfs(1);
+        bfs(1);
         for(int i=2; i<=N; i++){
             System.out.println(parent[i]);
         }
     }
-    static void dfs(int s){
+    static void bfs(int s){
         visited[s] = true;
+        Queue<Integer> q = new LinkedList<>();
+        q.offer(s);
 
-        for (int i : tree.get(s)) {
-            if (!visited[i]) {
-                parent[i] = s;
-                dfs(i);
+        while(!q.isEmpty()){
+            int cur = q.poll();
+                for (int i : tree.get(cur)) {
+                    if (!visited[i]) {
+                        q.offer(i);
+                        parent[i] = cur;
+                        visited[i] = true;
+                    }
+                }
             }
         }
-    }
 }
