@@ -22,7 +22,7 @@ public class Main {
             food[x][y]=1;
         }
 
-        cnt=1;
+        cnt=0;
         for(int i=1; i<=N; i++){
             for(int j=1; j<=M; j++) {
                 if (food[i][j] == 1 && !visited[i][j]) {
@@ -40,7 +40,7 @@ public class Main {
             int nextX = a+dx[i];
             int nextY = b+dy[i];
 
-            if(nextX<0 || nextY<0|| nextX>N || nextY>M) continue;
+            if(nextX<1 || nextY<1|| nextX>N || nextY>M) continue;
             if(food[nextX][nextY]==1 && !visited[nextX][nextY]){
                 size +=dfs(nextX,nextY);
             }
