@@ -1,28 +1,28 @@
 import java.util.*;
 import java.io.*;
 public class Main {
-    static int[][] dp;
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
         int num = Integer.parseInt(br.readLine());
         
+        int[][] dp = new int[30][30];
+        for(int i=0; i<30; i++){
+            dp[i][i]=1;
+            dp[i][0]=1;
+        }
+        for(int i=2; i<30; i++){
+            for(int j=1; j<30; j++){
+               dp[i][j]= dp[i-1][j-1]+dp[i-1][j];
+            } 
+        }
         
         for(int i=0; i<num; i++){
            st = new StringTokenizer(br.readLine()," ");
            int n = Integer.parseInt(st.nextToken());
            int k = Integer.parseInt(st.nextToken());
-           dp = new int[k+1][n+1];
-           System.out.println(bc(k,n));
+           
+           System.out.println(dp[k][n]);
         }
-    }
-    static int bc(int n, int k){
-        if(dp[n][k]>0){
-            return dp[n][k];
-        }
-        if(n==k|| k==0){
-            return dp[n][k]=1;
-        }
-        return dp[n][k]=bc(n-1,k-1)+bc(n-1,k);
     }
 }
