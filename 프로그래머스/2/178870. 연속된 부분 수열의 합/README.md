@@ -94,3 +94,11 @@
 
 
 > 출처: 프로그래머스 코딩 테스트 연습, https://school.programmers.co.kr/learn/challenges
+
+### 풀이
+<pre><b>슬라이딩 윈도우(투포인터)</b>
+1. Left =0, right =0 에서 시작
+2. sum에 sequence[right]를 더해가면서 진행
+3. sum>k라면 sum이 k 이하가 될 때까지 left를 증가시키며 빼줌
+4. sum==k라면 길이 확인 후 가장 짧은 거리인지 확인 후 최적의 정답 갱신
+5. 탐색계속</pre>
