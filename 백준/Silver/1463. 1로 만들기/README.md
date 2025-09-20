@@ -34,3 +34,61 @@
 
  <p>첫째 줄에 연산을 하는 횟수의 최솟값을 출력한다.</p>
 
+### 풀이
+<pre>이 문제를 단순 재귀/브루트포스로 풀게되면 같은 계산을 중복 계산하게 된다. 
+그래서 dp로 풀어야 하는데 dp로 풀게되면 dp[i]에 i를 1로 만드는 최소 연산의 횟수를 저장해 두면 
+이후 다른 경로에서 i가 다시 필요할때 이미 구해둔 값을 그대로 사용할 수 있다. 
+	
+- <b>중복 부분 문제</b>
+dp[6]을 구하는 경로는 여러 갈래가 있지만 결국 같은 dp[3],dp[2],dp[5] 등을 반복해서 사용하게 된다
+- <b>최적 부분 구조</b>
+dp[i]를 구할 때 세가지 경우중 최솟값을 텍하면 전체 푀적해가 보장된다
+- <b>부분 문제 구조</b>
+큰문제 dp[i]는 작은 문제 dp[i-1],dp[i/2],dp[i/3]의 해를 이용해 구할 수 있다.
+
+dp는 테이블정의, 점화식 찾기, 초기값 정하기 이 3단계를 생각해야한다. 
+<b>테이블 정의</b>
+dp[i]는 정수 i를 1로 만드는 최소 연산 횟수
+<b>점화식 찾기</b>
+dp[10] = dp[9] + 1 → 10에서 1 빼면 9, dp[9]에 1회 추가한 값
+if (10 % 2 == 0) → 가능 dp[10] = Math.min(dp[10], dp[5] + 1) → 10에서 2로 나누면 5, dp[5]에 1회 추가한 값과 비교
+if (10 % 3 == 0) → 불가능, 스킵
+결과적으로  계산한 경우중 최솟값을 선택
+<b>초기값 정하기</b>
+dp[0] = dp[1] = 0
+이 방법은 Bottom-up방식이다. 작은 값부터 차례대로 dp[N]까지 테이블을 채워 올라가기 때문이다. 반복문으로 구현되어 재귀호출 오버헤드가 없다.
+
+
+Top-dowm 방식으로 풀 수 있다 하지만 N=1000000까지 갈때 recur을 계속 타고 내려가면 호출 스택이 거의 백만 단위가 되는데, 
+자바는 기본 스택의 크기가 크지 않아서 호출이 너무 깊어지면 stackoverflowerror또는 시간 초과가 발생한다! 
+<pre><code>
+import java.util.*;
+import java.io.*;
+public class Main {  
+    static int[] dp;
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
+        dp = new int[N+1];
+        
+        Arrays.fill(dp,-1);
+        dp[1]=0;
+        
+        System.out.println(recur(N));
+    }
+    static int recur(int n){
+        if(dp[n]!=-1) return dp[n];
+        
+        dp[n]=recur(n-1)+1;
+        if(n%2==0){
+            dp[n]=Math.min(dp[n],recur(n/2)+1);
+        }
+        if(n%3==0){
+            dp[n]=Math.min(dp[n],recur(n/3)+1);
+        }
+        return dp[n];
+    }
+}
+</code></pre>
+</pre>
+
