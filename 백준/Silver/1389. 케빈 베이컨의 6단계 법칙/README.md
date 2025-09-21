@@ -50,3 +50,11 @@
 
  <p>첫째 줄에 BOJ의 유저 중에서 케빈 베이컨의 수가 가장 작은 사람을 출력한다. 그런 사람이 여러 명일 경우에는 번호가 가장 작은 사람을 출력한다.</p>
 
+### 풀이
+<pre>ArrayList형의 배열을 만든다. 그 배열의 크기는 입력받은 값을 통해 정해준다.
+그리고 각각의 배열안에는 ArrayList<>() 객체로 초기화 해준다.
+ArrayList<Integer>[] people;
+People = new ArrayList[N+1];
+for(int i=0; i<N; I++){
+	people[I]=new ArrayList<>();
+}</pre>
