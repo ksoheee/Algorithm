@@ -30,3 +30,11 @@
 
  <p><em>a</em><sup>2</sup>-<em>b</em><sup>2</sup>의 값을 소수점 아래의 첫째 자리에서 반올림하여 정수로 출력한다. 예를 들어, <em>a</em><sup>2</sup>-<em>b</em><sup>2</sup>의 값이 1.91이면 <code>2</code>를 출력한다.</p>
 
+### 풀이
+<img width="364" height="352" alt="image" src="https://github.com/user-attachments/assets/b8049bce-fa47-45a5-9a39-64f2c5b3a5c4" />
+<p>피타고라스 정의 이용</p>
+<p>소수 둘째자리에서 반올림하고 싶을 때:
+방법은 10을 곱해서 반올림 후 다시 나누기</p>
+<pre>double result = 12.256;
+double rounded = Math.round(result * 10) / 10.0;</pre>
+
