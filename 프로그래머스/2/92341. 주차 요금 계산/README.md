@@ -390,3 +390,63 @@
 
 
 > 출처: 프로그래머스 코딩 테스트 연습, https://school.programmers.co.kr/learn/challenges
+
+### 풀이
+<pre>풀이 1
+1. 기록 테이블 생성 
+- 차번호 존재하는지 확인
+- 차량 존재 할때
+    - 출차일때
+        입차 시간 출차 시간 계산
+        시간 업데이트
+        상태 변경
+   - 입차일때
+        시간 추가 
+        상태 입차로 변경 
+
+- 차량 존재 하지 않을때 
+   - 기록테이블에 새로 저장
+
+2. 출차안한 차량이 있을 때
+3. 차량 번호 기준 정렬
+4. 요금 계산
+
+(함수)
+차 번호 존재확인 함수 
+차량기록 테이블 수 만큼 루프 돌면서 차번호와 같은 index있는지 확인
+입차 출차 시간 계산 함수
+요금계산 함수 
+
+풀이2
+Map생성(map: 키, 값 구조)
+입차시각
+누적 주차 시간
+
+1. 새로운 시간 분으로 계산
+1-1. 입차라면
+     입차 시각 map에 저장
+1-2. 출차라면
+     출차시간 - 그전에 기록된 사간, 누적주차시간 map에 저장, 같은 차량번호의 입차시각 map 삭제
+2. 출차안한 차량 처리
+3. 차량 번호 순 정령
+4. 요금 계산
+
+참고
+String[] car = cars.get(idx);
+이 코드를 실행하면 car변수는 cars안에 들어있는 String[]객체의 주소를 가리키는 포인터가 됨
+
+cars.sort(...): 리스트 정렬
+Comparator.comparing(a->a[0]): 정렬 기준 지정 a[0]인 차량번호를 기준으로 정렬
+아래의 코드와 같음
+car.sort(new Comparator<String[]>(){
+	@Override
+	public int compare(String[] a, String[] b){
+		return a[0].compareTo(b[0]);
+
+double extra = (double)(totalMin - f[0]) / f[2]
+소수점까지 계산하기 위해 double로 변경하여 계산
+return f[1] + (int)Math.ceil(extra) * f[3]
+Math.ceil(): 올림처리 한 후 int형으로 변경 
+
+totalTime.getOrDefault(car, 0)
+map안에 car키가 있으면 그 값을 가져오고 없으면 기본값을 0으로 반환하라는 뜻</pre>
