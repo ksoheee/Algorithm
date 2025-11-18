@@ -2,34 +2,21 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args)throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        int N = Integer.parseInt(br.readLine());
-        // 예외: 묶음이 하나뿐이라면 비교가 필요 없음
-        if (N == 1) {
-            System.out.println(0);
-            return;
-        }
+        int n = Integer.parseInt(br.readLine());
 
         PriorityQueue<Integer> pq = new PriorityQueue<>();
-
-        for (int i = 0; i < N; i++) {
+        int sum = 0;
+        for(int i=0;i<n;i++){
             pq.add(Integer.parseInt(br.readLine()));
         }
-
-        int result = 0;
-
-        // 묶음이 두 개 이상일 때 계속 합치기
-        while (pq.size() > 1) {
-            int a = pq.poll();
-            int b = pq.poll();
-            int sum = a + b;
-
-            result += sum;
-            pq.add(sum);
+        for(int i=0;i<n-1;i++){
+            int tmp = pq.poll()+pq.poll();
+            pq.add(tmp);
+            sum+=tmp;
         }
-
-        System.out.println(result);
+        System.out.println(sum);
     }
+
 }
