@@ -12,19 +12,22 @@ public class Main {
         }
 
         //가중치 계산
-        HashMap<Character, Integer> map = new HashMap<>();
-        int value = 1;
-        for(int i=0;i<n;i++){
-            for(int j=arr[i].length()-1; j>=0;j--){
-                map.put(arr[i].charAt(j),map.getOrDefault(arr[i].charAt(j),0) +value);
+        int[] weight = new int[26];
+        for(int i=0; i<n; i++){
+            String word = arr[i];
+            int length = word.length();
+            int value = 1;
+            for(int j=length-1; j>=0; j--){
+                char ch = word.charAt(j);
+                int idx = ch - 'A';
+                weight[idx] += value;
                 value *= 10;
             }
-            value = 1;
         }
         //가중치만 리스트로 뽑고 정렬
         List<Integer> list = new ArrayList<>();
-        for(Integer i : map.values()){
-            list.add(i);
+        for(int i : weight){
+            if(i>0) list.add(i);
         }
         Collections.sort(list, Collections.reverseOrder());
         int num = 9;
@@ -36,4 +39,5 @@ public class Main {
         System.out.println(answer);
 
     }
+
 }
