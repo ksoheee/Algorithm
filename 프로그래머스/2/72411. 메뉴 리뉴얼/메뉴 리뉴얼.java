@@ -1,44 +1,56 @@
 import java.util.*;
 class Solution {
-    static int[] max; 
-    static HashMap<String,Integer> menu;
-    static String str;
+    HashMap<String, Integer> map; //조합, 등장 횟수
+    int max;    // 해당 course 길이에서 가장 많이 등장한 횟수
     public String[] solution(String[] orders, int[] course) {
-        ArrayList<String> answer = new ArrayList<>();
-        max = new int[course.length];
-        menu = new HashMap<>();
-        
-        for(int i=0; i<orders.length; i++){
-            char[] a = orders[i].toCharArray();
-            Arrays.sort(a);
-            str = String.copyValueOf(a);
+        int len = orders.length;
+        List<String> list = new ArrayList<>();
+    
+       //각 주문 정렬
+        for(int i=0; i<len; i++){
+            char[] arr = orders[i].toCharArray();
+            Arrays.sort(arr);
+            orders[i]= new String(arr);
+        }
+        //조합 생성
+        for(int c : course){
+            map = new HashMap<>();
+            max = 0;
             
-            for(int j=0; j<course.length; j++){
-                combo(0,0,"",j, course[j]);
+            for(int i=0; i<len; i++){
+                char[] arr = orders[i].toCharArray();
+                if(arr.length<c) continue;
+                
+                dfs(arr,0,0, c, new StringBuilder());
+            }
+            
+            //가장 많이 등장한 조합 추가(등장 횟수>=2)
+            for(String key : map.keySet()){
+                 if(map.get(key) == max && max>=2){
+                     list.add(key);
+                 }              
             }
         }
+        //사전 순 정렬
+        Collections.sort(list);
         
-        for(String s: menu.keySet()){
-            for(int i=0; i<course.length; i++){
-                if(course[i]==s.length() && max[i] != 1 && max[i]==menu.get(s)) answer.add(s);
-            }
-        }
+        return list.toArray(new String[0]);
         
-        String[] result = new String[answer.size()];
-        for(int i=0; i<answer.size(); i++){
-            result[i]=answer.get(i);
-        }
-        Arrays.sort(result);
-        return result;
     }
-    static void combo(int cur, int cnt, String s, int j, int N){
-        if(cnt == N){
-            menu.put(s, menu.containsKey(s) ? menu.get(s)+1 :1);
-            max[j] = Math.max(max[j], menu.get(s));
+    //메뉴 조합
+    private void dfs(char[] arr, int start, int depth, int targetLen, StringBuilder sb){
+        if(depth == targetLen){
+            String key = sb.toString();
+            map.put(key, map.getOrDefault(key,0)+1);
+            max = Math.max(max, map.get(key));
             return;
         }
-        for(int i=cur; i<str.length(); i++){
-            combo(i+1, cnt+1, s+str.charAt(i), j,N);
+        
+        for(int i=start;i<arr.length; i++){
+            sb.append(arr[i]);
+            dfs(arr, i+1, depth+1, targetLen, sb);
+            sb.deleteCharAt(sb.length()-1);
         }
     }
+    
 }
