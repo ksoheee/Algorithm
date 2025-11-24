@@ -1,54 +1,54 @@
 import java.util.*;
 class Solution {
-    HashMap<String, Integer> map; //조합, 등장 횟수
-    int max;    // 해당 course 길이에서 가장 많이 등장한 횟수
+    //코스요리,주문횟수
+    HashMap<String, Integer> map;
+    int max;
     public String[] solution(String[] orders, int[] course) {
-        int len = orders.length;
-        List<String> list = new ArrayList<>();
-    
-       //각 주문 정렬
-        for(int i=0; i<len; i++){
+        List<String> answer = new ArrayList<>();
+        //주문 정렬 (조합이므로)
+        for(int i=0; i<orders.length; i++){
             char[] arr = orders[i].toCharArray();
             Arrays.sort(arr);
-            orders[i]= new String(arr);
+            orders[i] = new String(arr);
         }
-        //조합 생성
-        for(int c : course){
+        
+        //조합해야 하는 수만 큼 
+        for(int c: course){
+            //map, max 갱신
             map = new HashMap<>();
             max = 0;
-            
-            for(int i=0; i<len; i++){
-                char[] arr = orders[i].toCharArray();
-                if(arr.length<c) continue;
+            //주문선택
+            for(int i=0; i<orders.length; i++){
+                String o = orders[i];
+                if(o.length()<c) continue;
                 
-                dfs(arr,0,0, c, new StringBuilder());
+                //조합 선택
+                combo(o,0,0,c,new StringBuilder());
             }
-            
-            //가장 많이 등장한 조합 추가(등장 횟수>=2)
-            for(String key : map.keySet()){
-                 if(map.get(key) == max && max>=2){
-                     list.add(key);
-                 }              
+            //c 조합에서의 최대 주문, 코스요리 선택 
+            for(String s:map.keySet()){
+                if(map.get(s)==max && max>=2){
+                    answer.add(s);
+                }
             }
         }
-        //사전 순 정렬
-        Collections.sort(list);
-        
-        return list.toArray(new String[0]);
+        Collections.sort(answer);
+        //배열로 바꾸고 반환
+        return answer.toArray(new String[0]);
         
     }
-    //메뉴 조합
-    private void dfs(char[] arr, int start, int depth, int targetLen, StringBuilder sb){
-        if(depth == targetLen){
-            String key = sb.toString();
-            map.put(key, map.getOrDefault(key,0)+1);
-            max = Math.max(max, map.get(key));
+    public void combo(String o, int start, int depth, int c, StringBuilder sb){
+        if(depth == c){
+            String t = sb.toString();
+            //메뉴 조합 저장
+            map.put(t, map.getOrDefault(t, 0)+1);
+            //최댓값(주문 수)계산
+            max = Math.max(max, map.get(t));
             return;
         }
-        
-        for(int i=start;i<arr.length; i++){
-            sb.append(arr[i]);
-            dfs(arr, i+1, depth+1, targetLen, sb);
+        for(int i =start; i<o.length(); i++){
+            sb.append(o.charAt(i)); //문자 추가 하여 조합 생성
+            combo(o,i+1, depth+1, c, sb);
             sb.deleteCharAt(sb.length()-1);
         }
     }
