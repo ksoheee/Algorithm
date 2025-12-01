@@ -461,3 +461,20 @@
 
 
 > 출처: 프로그래머스 코딩 테스트 연습, https://school.programmers.co.kr/learn/challenges
+
+### 풀이
+<pre>대기실(board) 5×5 전체를 순회
+
+각 칸 (r, c)에 대해
+
+X면 스킵
+
+자기 자신이 P면 peopleCnt++
+
+상하좌우 4방향을 확인하여
+이웃이 P면 peopleCnt++
+
+(자기 자신 + 인접 4칸)에서
+P 개수가 2개 이상이면 거리두기 위반
+
+즉시 종료 (break aaa</pre>
