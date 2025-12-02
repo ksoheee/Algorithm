@@ -1,36 +1,49 @@
+
 import java.io.*;
 import java.util.*;
-public class Main {
+
+class Main{
+    static List<Integer>[] list;
     static boolean[] visited;
-    static int[][] graph;
     static int cnt;
-    public static void main(String[] args) throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));        
-        int total = Integer.parseInt(br.readLine());
-        int num = Integer.parseInt(br.readLine());
-        StringTokenizer st; 
-        graph = new int[total+1][total+1];
-        
-        for(int i=0; i<num; i++){
-            st = new StringTokenizer(br.readLine(), " ");
-            int x = Integer.parseInt(st.nextToken());
-            int y = Integer.parseInt(st.nextToken());
-            graph[x][y]= graph[y][x]=1;
+    public static void main(String[] args)throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(br.readLine());
+        int m = Integer.parseInt(br.readLine());
+
+        list = new ArrayList[n+1];
+        for(int i=0; i<=n; i++){
+            list[i]= new ArrayList<>();
         }
-        visited = new boolean[total+1];
-        DFS(1);
+
+        StringTokenizer st;
+        for(int i=0; i<m; i++){
+            st = new StringTokenizer(br.readLine());
+            int n1 = Integer.parseInt(st.nextToken());
+            int n2 = Integer.parseInt(st.nextToken());
+            list[n1].add(n2);
+            list[n2].add(n1);
+        }
+
+        visited = new boolean[n+1];
+        bfs(1);
         System.out.println(cnt);
-        
-        
     }
-    public static void DFS(int v){
-        visited[v]=true;
-        for(int i=0; i<graph.length; i++){
-            if(graph[v][i]==1 && visited[i]==false){
-                cnt++;
-                DFS(i);
+    public static void bfs(int s){
+        Queue<Integer> q = new LinkedList<>();
+        visited[s] = true;
+        q.offer(s);
+
+        while(!q.isEmpty()){
+            int t = q.poll();
+
+            for(int i=0; i<list[t].size(); i++){
+                if(!visited[list[t].get(i)]){
+                    visited[list[t].get(i)] = true;
+                    q.offer(list[t].get(i));
+                    cnt++;
+                }
             }
         }
-        
     }
 }
