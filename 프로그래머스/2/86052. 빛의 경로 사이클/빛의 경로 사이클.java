@@ -24,7 +24,7 @@ class Solution {
                     if(!visited[i][j][k]){
                         cnt=0;
                         r = i; c = j; d = k;
-                        dfs();
+                        explore();
                         
                         answer.add(cnt);
                     }
@@ -35,7 +35,7 @@ class Solution {
         return answer.stream().mapToInt(i->i).toArray();
         
     }
-    public void dfs(){
+    public void explore(){
         while(!visited[r][c][d]){
             visited[r][c][d]=true;
             cnt++;
