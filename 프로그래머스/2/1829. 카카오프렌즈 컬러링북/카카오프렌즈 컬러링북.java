@@ -15,7 +15,7 @@ class Solution {
         for(int i=0; i<picture.length; i++){
             for(int j=0; j<picture[0].length; j++){
                 if(!visited[i][j] && picture[i][j]!=0){
-                    maxSizeOfOneArea=Math.max(maxSizeOfOneArea,bfs(i,j, picture[i][j],picture));
+                    maxSizeOfOneArea=Math.max(maxSizeOfOneArea,dfs(i,j, picture[i][j],picture));
                     numberOfArea++;
                 }
             }
@@ -26,32 +26,21 @@ class Solution {
         answer[1] = maxSizeOfOneArea;
         return answer;
     }
-    public int bfs(int y, int x, int t, int[][] picture){
-        Queue<int[]> q = new LinkedList<>();
-        visited[y][x]=true;
-        q.offer(new int[]{y,x,t});
+    public int dfs(int y, int x, int t,int[][] picture){
+        visited[y][x] = true;
         int cnt = 1;
-        
-        while(!q.isEmpty()){
-            int[] p = q.poll();
-            int py = p[0];
-            int px = p[1];
-            int tmp = p[2];
-            
-            for(int i=0; i<4; i++){
-                int ny = py+dy[i];
-                int nx = px+dx[i];
-                
-                if(ny<0 || nx<0 || ny>=M || nx>=N || visited[ny][nx]) continue;
-                
-                //같은 숫자가 아니면 
-                if(picture[ny][nx]!=tmp) continue;
-                
-                visited[ny][nx]= true;
-                q.offer(new int[]{ny,nx,tmp});
-                cnt++;
-            }
+ 
+        for(int i=0; i<4; i++){
+            int ny = y+dy[i];
+            int nx = x+dx[i];
+
+            if(ny<0 || nx<0 || ny>=M || nx>=N || visited[ny][nx]) continue;
+
+            //같은 숫자가 아니면 
+            if(picture[ny][nx]!=t) continue;
+            cnt += dfs(ny,nx,t,picture);
         }
+        
         return cnt;
     }
 }
