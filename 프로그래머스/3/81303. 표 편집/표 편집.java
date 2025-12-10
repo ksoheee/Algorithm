@@ -1,53 +1,60 @@
 import java.util.*;
 class Solution {
     public String solution(int n, int k, String[] cmd) {
-        int len = cmd.length;
+        int[] prev = new int[n];
+        int[] next = new int[n];
         
-        //삭제된 행을 저장할 스택
-        Deque<Integer> saveDelete = new ArrayDeque<>();
-        List<String> result = new ArrayList<>();
         for(int i=0; i<n; i++){
-            result.add("O");
+            prev[i]=i-1;
+            next[i]=i+1;
         }
-        //현재 위치
-        int idx = k; int r = n;
+        next[n-1]=-1;
         
-        for(int i=0; i<len; i++){
-            String tmp = cmd[i];
-            //1글자일때
-            if(tmp.length()==1){
-               if(tmp.equals("Z")){
-                   //스택에서 불러오고 행 길이 늘림
-                   int d = saveDelete.pop();
-                   if(idx>=d) idx++;
-                   r++;
-               }else if(tmp.equals("C")){
-                   //삭제한 행위위치 저장
-                   saveDelete.push(idx);
-                   r--;
-                   //삭제하면 전체 길이 -1
-                   //만약에 삭제 하고나서 길이를 줄였는데 인덱스가 길이와 같아지면 현재인덱스-1
-                   if(idx==r) idx--;
-               }
-            }else{
-                String[] arr = tmp.split(" ");
-                if(arr[0].equals("U")){
-                    idx -= Integer.parseInt(arr[1]);
-                    if(idx<0) idx = 0;
-                }else if(arr[0].equals("D")){
-                    idx += Integer.parseInt(arr[1]);
-                    if(idx>r-1) idx = r-1;
-                }
+        int idx = k; //현재 위치 
+        
+        Deque<int[]> saveDelete = new ArrayDeque<>();
+        boolean[] deleted = new boolean[n];
+        
+        for(int i=0; i<cmd.length; i++){
+            char tmp = cmd[i].charAt(0);
+            if(tmp=='U'){
+                int c = Integer.parseInt(cmd[i].substring(2));
+                for(int j=0; j<c; j++) idx = prev[idx];
+            }else if(tmp=='D'){
+                int c = Integer.parseInt(cmd[i].substring(2));
+                for(int j=0; j<c; j++) idx = next[idx];
+            }
+            else if(tmp=='C'){
+                deleted[idx]=true;
+                saveDelete.push(new int[]{idx, prev[idx],next[idx]});
+                
+                if(prev[idx]!=-1)    next[prev[idx]] = next[idx];
+                if(next[idx]!=-1)    prev[next[idx]] = prev[idx];
+                
+                if(next[idx]!=-1)    idx = next[idx];
+                else                 idx = prev[idx];
+            }else if(tmp=='Z'){
+                int[] re = saveDelete.pop();
+                int reIdx = re[0];
+                int pIdx = re[1];
+                int nIdx = re[2];
+                
+                deleted[reIdx] = false;
+                
+                if(pIdx!=-1) next[pIdx] = reIdx;
+                if(nIdx!=-1) prev[nIdx] = reIdx;
+                
+                prev[reIdx] = pIdx;
+                next[reIdx] = nIdx;
             }
         }
+        
         StringBuilder sb = new StringBuilder();
-        for(int i=0; i<r; i++){
-            sb.append("O");
-        }
-        while(!saveDelete.isEmpty()){//삭제된게 있으면
-            sb.insert(saveDelete.pop(),"X");
+        for(int i=0; i<n; i++){
+            if(deleted[i])  sb.append("X");
+            else            sb.append("O");
         }
         return sb.toString();
+        
     }
-    
 }
