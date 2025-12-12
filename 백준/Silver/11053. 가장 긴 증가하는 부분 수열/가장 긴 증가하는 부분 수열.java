@@ -7,23 +7,33 @@ class Main{
         int n = Integer.parseInt(br.readLine());
 
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int[] arr = new int[n+1];
-        for(int i=1; i<=n; i++){
+        int[] arr = new int[n];
+        for(int i=0; i<n; i++){
             arr[i]=Integer.parseInt(st.nextToken());
         }
-
-        int[] dp = new int[n+1];
-        dp[1] = 1;
-        int max = 1;
-        for(int i=2; i<=n; i++){
-            dp[i]=1;
-            for(int j=1; j<i; j++){
-                if(arr[i]>arr[j]){
-                    dp[i]= Math.max(dp[j]+1, dp[i]);
-                }
+        List<Integer> tails = new ArrayList<>();
+        for(int x: arr){
+            if(tails.isEmpty() || tails.get(tails.size()-1)<x)
+                tails.add(x);
+            else{
+                int idx = lowerBound(tails, x);
+                tails.set(idx, x);
             }
-            max = Math.max(max,dp[i]);
         }
-        System.out.println(max);
+        System.out.println(tails.size());
+    }
+    static int lowerBound(List<Integer> arr, int target){
+        int left = 0;
+        int right = arr.size();
+
+        while(left<right){
+            int mid = (left+right)/2;
+            if(arr.get(mid)<target){
+                left=mid+1;
+            }else{
+                right=mid;
+            }
+        }
+        return left;
     }
 }
