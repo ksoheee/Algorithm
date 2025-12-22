@@ -1,53 +1,71 @@
 import java.util.*;
 class Solution {
+    List<Edge>[] graph;
+    final int INF = Integer.MAX_VALUE;
     public int solution(int N, int[][] road, int K) {
-        //인접 리스트
-        List<List<Node>> graph = new ArrayList<>();
+        int answer = 0;
+        
+        graph = new ArrayList[N+1];
         for(int i=0; i<=N; i++){
-            graph.add(new ArrayList<>());
+            graph[i]= new ArrayList<>();
         }
-        //양방향 간선 저장
-        for(int[] r: road){
-            int a = r[0]; int b = r[1]; int c = r[2];
-            graph.get(a).add(new Node(b,c));
-            graph.get(b).add(new Node(a,c));
-        }
-        //거리배열
-        int[] dist = new int[N+1];
-        Arrays.fill(dist, Integer.MAX_VALUE);
-        dist[1]=0; //1번 마을은 거리 0
-        
-        PriorityQueue<Node> pq = new PriorityQueue<>((a,b) -> a.cost-b.cost);
-        pq.offer(new Node(1,0));
-        
-        while(!pq.isEmpty()){
-            Node cur = pq.poll();
-            
-            if(cur.cost>dist[cur.to]) continue;
-            
-            for(Node next : graph.get(cur.to)){
-                int newCost = cur.cost+ next.cost;
-                if(newCost<dist[next.to]){
-                    dist[next.to]= newCost;
-                    pq.offer(new Node(next.to, newCost));
-                }
-            }
+        for(int i=0; i<road.length; i++){
+            graph[road[i][0]].add(new Edge(road[i][1],road[i][2]));
+            graph[road[i][1]].add(new Edge(road[i][0],road[i][2]));
         }
         
-        int answer=0;
+        int[] result = dijkstra(1, N, K, graph);
         for(int i=1; i<=N; i++){
-            if(dist[i]<=K){
-                answer++;
-            }
+            if(result[i]<=K) answer++;
         }
+        
         return answer;
     }
-    static class Node{
+    public int[] dijkstra(int start, int N, int K, List<Edge>[] graph){
+        int[] dist = new int[N+1];
+        
+        Arrays.fill(dist,INF);
+        dist[start]=0;
+        
+        PriorityQueue<Node> pq = new PriorityQueue<>();
+        pq.offer(new Node(start, 0));
+       
+        while(!pq.isEmpty()){
+            Node cur = pq.poll();
+            int u = cur.v;
+            
+            if(cur.dist != dist[cur.v]) continue;
+            
+            for(Edge e : graph[u]){
+                int to = e.to;
+                int w = e.weight;
+                
+                if(dist[to]>dist[u]+w){
+                    dist[to]=dist[u]+w;
+                    pq.offer(new Node(to,dist[to]));
+                }    
+            }
+        }
+        return dist;
+    }
+    class Node implements Comparable<Node>{
+        int v;
+        int dist;
+        Node(int v, int dist){
+            this.v = v;
+            this.dist = dist;
+        }
+        @Override
+        public int compareTo(Node o){
+            return this.dist - o.dist;
+        }
+    }
+    class Edge{
         int to;
-        int cost;
-        Node(int to, int cost){
+        int weight; //가중치
+        Edge(int to, int weight){
             this.to = to;
-            this.cost = cost;
+            this.weight= weight;
         }
     }
 }
