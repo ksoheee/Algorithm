@@ -1,0 +1,27 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        int N = Integer.parseInt(st.nextToken());
+        int K = Integer.parseInt(st.nextToken());
+
+        int[] dp = new int[K + 1];
+
+        for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(br.readLine());
+            int W = Integer.parseInt(st.nextToken());
+            int V = Integer.parseInt(st.nextToken());
+
+            // 뒤에서부터 갱신 (0/1 배낭 핵심)
+            for (int w = K; w >= W; w--) {
+                dp[w] = Math.max(dp[w], dp[w - W] + V);
+            }
+        }
+
+        System.out.println(dp[K]);
+    }
+}
