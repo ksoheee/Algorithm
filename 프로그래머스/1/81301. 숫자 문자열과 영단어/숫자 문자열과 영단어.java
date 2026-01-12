@@ -3,8 +3,6 @@ class Solution {
     public int solution(String s) {
         int answer = 0;
         String[] english = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
-        Map<Integer, String> num = new HashMap<>();
-        Map<String, Integer> word = new HashMap<>();
         
         //영어 -> 숫자로 바꾸면 됨
         char[] chr = s.toCharArray();
