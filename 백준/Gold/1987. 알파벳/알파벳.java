@@ -7,8 +7,8 @@ public class Main {
     static char[][] board;
     static boolean[][] visited;
     static int N,M;
-    static Set<Character> set;
     static int max;
+    static boolean[] alphabet = new boolean[26];
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine()," ");
@@ -24,9 +24,9 @@ public class Main {
                 board[i][j] = str.charAt(j);
             }
         }
+        int idx =board[0][0] - 'A';
+        alphabet[idx] = true;
 
-        set = new HashSet<>();
-        set.add(board[0][0]);
         dfs(1,0,0);
         System.out.println(max);
     }
@@ -38,10 +38,11 @@ public class Main {
             int nc = c + dx[i];
 
             if(nr<0 || nr>=N || nc<0 || nc>=M) continue;
-            if(set.contains(board[nr][nc])) continue;
-            set.add(board[nr][nc]);
+            int idx = board[nr][nc]-'A';
+            if(alphabet[idx]) continue;
+            alphabet[idx] = true;
             dfs(dep+1, nr, nc);
-            set.remove(board[nr][nc]);
+            alphabet[idx] = false;
         }
     }
 }
