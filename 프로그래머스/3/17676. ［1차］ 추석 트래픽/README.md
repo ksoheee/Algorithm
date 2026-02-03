@@ -92,3 +92,27 @@
 
 
 > 출처: 프로그래머스 코딩 테스트 연습, https://school.programmers.co.kr/learn/challenges
+
+
+### 풀이
+<pre>로그의 시간 단위는 ms로 변환한다.
+
+각 로그는 처리 구간 [start, end]로 저장한다.
+
+start = end - duration + 1
+
+처리 시간은 시작/끝을 모두 포함하므로 +1ms를 더한다.
+
+1초 동안의 처리량은, 어떤 기준 시각 t에 대해 1초 창 [t, t+999]에 겹치는 요청 수로 정의한다.
+
+1초 = 1000ms이고, 끝 시각을 포함하므로 t+1000이 아니라 t+999가 된다.
+
+저장된 모든 로그의 end를 기준 시각 t 후보로 삼아, 각 t마다 창을 [windowStart=t, windowEnd=t+999]로 잡고 겹치는 요청을 센다.
+
+요청 구간 [start, end]가 창 [windowStart, windowEnd]와 겹치는 조건은:
+
+start ≤ windowEnd 그리고 end ≥ windowStart
+
+조건을 만족하면 해당 1초 창에서 처리 중인 요청으로 카운트한다.
+
+모든 후보 t에 대해 카운트한 값 중 최댓값이 정답이다.</pre>
