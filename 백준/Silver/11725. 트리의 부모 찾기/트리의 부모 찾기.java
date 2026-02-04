@@ -1,48 +1,45 @@
 import java.util.*;
 import java.io.*;
-public class Main {
+
+public class Main{
+    static List<Integer>[] tree;
     static boolean[] visited;
     static int[] parent;
-    static List<List<Integer>> tree = new ArrayList<>();
-    static int cnt;
-    static int N;
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args)throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(br.readLine());
+
         StringTokenizer st;
-        N = Integer.parseInt(br.readLine());
+        tree = new List[n+1];
+        visited = new boolean[n+1];
+        parent = new int[n+1];
+        for(int i = 1; i <= n; i++){
+            tree[i] = new ArrayList<>();
+        }
 
-        for (int i = 0; i <= N; i++) {
-            tree.add(new ArrayList<>());    //각 노드마다 빈 리스트 준비
+        for(int i = 1; i < n; i++){
+            st = new StringTokenizer(br.readLine());
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
+            tree[x].add(y);
+            tree[y].add(x);
         }
-        parent = new int[N+1];
-        visited = new boolean[N+1];
+        dfs(1);
+        StringBuilder sb = new StringBuilder();
+        for(int i = 2; i <= n; i++){
+            sb.append(parent[i]).append("\n");
+        }
+        System.out.println(sb);
 
-        for(int i=1; i<N; i++){
-            st = new StringTokenizer(br.readLine()," ");
-            int a = Integer.parseInt(st.nextToken());
-            int b = Integer.parseInt(st.nextToken());
-            tree.get(a).add(b);
-            tree.get(b).add(a);
-        }
-        bfs(1);
-        for(int i=2; i<=N; i++){
-            System.out.println(parent[i]);
-        }
     }
-    static void bfs(int s){
-        visited[s] = true;
-        Queue<Integer> q = new LinkedList<>();
-        q.offer(s);
+    static void dfs(int cur){
+        visited[cur] = true;
 
-        while(!q.isEmpty()){
-            int cur = q.poll();
-                for (int i : tree.get(cur)) {
-                    if (!visited[i]) {
-                        q.offer(i);
-                        parent[i] = cur;
-                        visited[i] = true;
-                    }
-                }
+        for(int i : tree[cur]){
+            if(!visited[i]){
+                parent[i] = cur;
+                dfs(i);
             }
         }
+    }
 }
