@@ -2,7 +2,6 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-    static boolean[] visited;
     static class Node{
         int to;
         int weight;
@@ -12,8 +11,8 @@ public class Main {
         }
     }
     static List<List<Node>> nodes = new ArrayList<>();
-    static int maxDist;
-    static int farNode;
+    static boolean[] visited;
+    static int max;
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
@@ -34,35 +33,30 @@ public class Main {
             nodes.get(a).add(new Node(b, c));
             nodes.get(b).add(new Node(a, c));
         }
-
-
-        //1에서 가장 먼 노드 찾기
         visited = new boolean[n+1];
-        maxDist = -1;
-        farNode = 1; //유효한 노드로 초기화 하기 위해
-        dfs(1,0);
-
-        //farNode에서 가장 먼 노드 찾기
-        visited = new boolean[n+1];
-        maxDist = -1;
-        dfs(farNode,0);
-
-        System.out.println(maxDist);
+        dfs(1);
+        System.out.println(max);
 
     }
-    static void dfs(int cur, int dist){
+    static int dfs(int cur){
         visited[cur] = true;
+        int top1=0; int top2=0;
 
-        if(dist> maxDist){
-            maxDist = dist;
-            farNode = cur;
-        }
-
-        for(Node node: nodes.get(cur)){
+        for(Node node : nodes.get(cur)){
             if(!visited[node.to]){
-                dfs(node.to, dist+node.weight);
+                int childDist = dfs(node.to)+node.weight;
+
+                if(childDist>top1){
+                    top2 = top1;
+                    top1 = childDist;
+                }else if(childDist>top2){
+                    top2 = childDist;
+                }
             }
         }
-    }
+        //현재 노드에서의 가장 긴 경로 2개가 max인지 확인
+        max = Math.max(top1+top2, max);
 
+        return top1;
+    }
 }
