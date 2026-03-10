@@ -1,32 +1,39 @@
 import java.util.*;
 class Solution {
     public int solution(int bridge_length, int weight, int[] truck_weights) {
-        int time = 0;
-        int totalWeight=0;
+        int answer = 0;
+        int currentWeight =0;
+        int len = truck_weights.length;
         
         Queue<Integer> q = new LinkedList<>();
+        
+        //다리에 올라갈 수 있는 트럭
         for(int i=0; i<bridge_length; i++){
             q.offer(0);
         }
         
-        int index=0;
-        while(index<truck_weights.length){
-            time++;
+        int c = 0;
+        while(c<len){
+            answer++;
             
-            //한칸 이동 다리 빠져나감
-            totalWeight -= q.poll();
+            //다리 빠져나감
+            int truck = q.poll();
+            currentWeight-=truck;
             
-            //다음 트럭이 올라갈 수 있는지 확인
-            if(totalWeight+truck_weights[index]<=weight){
-                q.offer(truck_weights[index]);
-                totalWeight += truck_weights[index];
-                index++;
-            }
+            //무게가 괜찮다면 트럭 건너기
+            if(currentWeight+truck_weights[c]<=weight){
+                q.offer(truck_weights[c]);
+                currentWeight+=truck_weights[c];
+                c++;
+            }//아니면 빈 공간 
             else{
-                q.offer(0); //올라갈수 없다면 0으로 한칸 이동
+                q.offer(0);
             }
+            
         }
-        //마지막 트럭이 지날때 까지 시간 추가
-        return time+bridge_length;
+        
+        
+        
+        return answer+bridge_length;
     }
 }

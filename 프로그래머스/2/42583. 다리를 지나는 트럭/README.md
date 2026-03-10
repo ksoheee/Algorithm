@@ -1,10 +1,10 @@
 # [level 2] 다리를 지나는 트럭 - 42583 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/42583) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/42583?language=java) 
 
 ### 성능 요약
 
-메모리: 90.3 MB, 시간: 29.94 ms
+메모리: 91.7 MB, 시간: 19.30 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 10월 09일 18:59:58
+2026년 03월 10일 15:20:36
 
 ### 문제 설명
 
@@ -123,11 +123,3 @@
 
 
 > 출처: 프로그래머스 코딩 테스트 연습, https://school.programmers.co.kr/learn/challenges
->
-
-### 풀이
-<pre>큐는 다리의 길이 만큼 사용한다.
-시간이 1초 지날때 마다
-- 큐의 맨 앞의 트럭이 지나감
-- 대기 중인 트럭이 다리에 진입 가능한지 검사(현재 다리 무게+ 다음 트럭 무게<=weight이면 진입)
-- 그렇지 않으면 0 넣어 한칸 이동만 표현 </pre>
