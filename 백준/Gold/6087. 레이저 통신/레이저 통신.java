@@ -2,83 +2,83 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-   static char[][] map;
-   static List<int[]> list;
-   static int[] dx = {-1, 1, 0, 0};
-   static int[] dy = {0, 0, -1, 1};
-   static final int INF = 1_000_000_000;
-    public static void main(String[] args) throws Exception {
+    
+    static char[][] map;
+    static List<int[]> list;
+    static final int INF = 1_000_000_000;
+    static int[][][] mirrorNum;
+    static int[] dx = {-1, 1, 0, 0};
+    static int[] dy = {0, 0, -1, 1};
+    
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int M = Integer.parseInt(st.nextToken());
-        int N = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        int n = Integer.parseInt(st.nextToken());
 
-        map = new char[N][M];
+        map = new char[n][m];
         list = new ArrayList<>();
-        for(int i = 0; i < N; i++){
-            String ss = br.readLine();
-            for(int j = 0; j < M; j++){
-                map[i][j] = ss.charAt(j);
+
+        for(int i = 0; i < n; i++){
+            String line = br.readLine();
+            for(int j = 0; j < m; j++){
+                map[i][j] = line.charAt(j);
                 if(map[i][j] == 'C'){
-                    list.add(new int[] {i, j});
+                    list.add(new int[]{i, j});
                 }
             }
         }
 
-        //시작점과 끝점
-        int sr = list.get(0)[0]; int sc = list.get(0)[1];
-        int er = list.get(1)[0]; int ec = list.get(1)[1];
+        int startR = list.get(0)[0], startC = list.get(0)[1];
+        int endR = list.get(1)[0], endC = list.get(1)[1];
 
-        //(r,c)에 dir 방향으로 도착했을 때 필요한 최소 거울 수 (방향 0~3)
-        int[][][] dist =  new int[N][M][4];
-        for(int i = 0; i < N; i++)
-            for(int j = 0; j < M; j++)
-                Arrays.fill(dist[i][j], INF);
+        mirrorNum = new int[n][m][4]; //상하좌우 4방향
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < m; j++){
+                Arrays.fill(mirrorNum[i][j],INF);
+            }
+        }
 
+        mirrorNum[startR][startC][0] = 0;
+        mirrorNum[startR][startC][1] = 0;
+        mirrorNum[startR][startC][2] = 0;
+        mirrorNum[startR][startC][3] = 0;
 
-        //시작은 모든 방향으로 발사할수 있음
-        dist[sr][sc][0] = 0;
-        dist[sr][sc][1] = 0;
-        dist[sr][sc][2] = 0;
-        dist[sr][sc][3] = 0;
+        Deque<int[]> q = new ArrayDeque<>();
+        q.offer(new int[]{startR, startC, 0});
+        q.offer(new int[]{startR, startC, 1});
+        q.offer(new int[]{startR, startC, 2});
+        q.offer(new int[]{startR, startC, 3});
 
-        //큐가 아니라 덱을 사용해서 간선 비용이 더 적은 방향을 먼저 탐색하도록
-        Deque<int[]> dq = new ArrayDeque<>();
-        dq.offer(new int[] {sr, sc, 0});
-        dq.offer(new int[] {sr, sc, 1});
-        dq.offer(new int[] {sr, sc, 2});
-        dq.offer(new int[] {sr, sc, 3});
+        while(!q.isEmpty()){
+            int[] cur = q.poll();
+            int curR = cur[0];
+            int curC = cur[1];
+            int curDist =  cur[2];
 
-        while(!dq.isEmpty()){
-            int[] cur = dq.poll();
-            int cr = cur[0];
-            int cc = cur[1];
-            int cdir = cur[2];
-            int curCost = dist[cr][cc][cdir]; //현재 위치 거울수
+            int curMirrorN = mirrorNum[curR][curC][curDist];
 
             for(int i = 0; i < 4; i++){
-                int ny = cr + dy[i];
-                int nx = cc + dx[i];
+                int nextR = curR + dy[i];
+                int nextC = curC + dx[i];
 
-                int cost; // 탐색한 위치에 i 방향으로 도착하는 최소 거울 수 후보
-                if(ny<0 || ny>=N || nx<0 || nx>=M || map[ny][nx] == '*') continue;
+                int mirrorN = 0;
+                if(nextR<0 || nextR >= n || nextC<0 || nextC >= m || map[nextR][nextC] == '*') continue;
 
-                //현재 방향과 탐색한 방향이 같으면 현재위치 거울수, 다르면 +1
-                if(cdir == i) cost = curCost;
-                else cost = curCost + 1;
+                if(i == curDist)    mirrorN = curMirrorN;
+                else                mirrorN = curMirrorN + 1;
 
-                //새로 계산한 후보 cost가 기존 dist 보다 작으면
-                if(dist[ny][nx][i]>cost){
-                    dist[ny][nx][i] = cost;
-                    //가중치에 따라 앞 뒤에 삽입
-                    if(i == cdir) dq.addFirst(new int[] {ny, nx, i});
-                    else dq.addLast(new int[] {ny, nx, i});
+                if(mirrorN < mirrorNum[nextR][nextC][i]){
+                    mirrorNum[nextR][nextC][i] = mirrorN;
+
+                    if(i == curDist)    q.addFirst(new int[]{nextR, nextC, i});
+                    else                q.addLast(new int[]{nextR, nextC, i});
                 }
             }
         }
-        int ans = INF;
-        for(int i=0; i<4; i++) ans = Math.min(ans, dist[er][ec][i]);
-        System.out.println(ans);
 
+        int min = INF;
+        for(int i=0; i<4; i++) min = Math.min(mirrorNum[endR][endC][i], min);
+        System.out.println(min);
     }
 }
