@@ -1,24 +1,20 @@
-import java.util.*;
 class Solution {
     boolean[] visited;
-    int result;
+    int answer;
     public int solution(int k, int[][] dungeons) {
         visited = new boolean[dungeons.length];
+        dfs(k, dungeons, 0);
         
-        permutation(k, 0, dungeons);
-        
-        return result;
+        return answer;
     }
-    //순열의 조합
-    public void permutation(int k, int cnt, int[][] dungeons){
-        result = Math.max(cnt, result);
+    void dfs(int current, int[][] dungeons, int cnt){
+        answer = Math.max(answer, cnt);
         
         for(int i=0; i<dungeons.length; i++){
-            if(!visited[i] && dungeons[i][0]<=k){
-                visited[i]= true;
-                permutation(k-dungeons[i][1], cnt+1, dungeons);
-                
-                visited[i]= false;
+            if(!visited[i] && dungeons[i][0]<=current){
+                visited[i]=true;
+                dfs(current-dungeons[i][1], dungeons, cnt+1);
+                visited[i]=false;
             }
         }
     }
