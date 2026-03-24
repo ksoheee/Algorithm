@@ -4,7 +4,6 @@ class Solution {
             if (yellow % h != 0) {
                 continue;
             }
-
             int innerH = h;
             int innerW = yellow / h;
 
@@ -15,7 +14,6 @@ class Solution {
                 return new int[]{carpetW, carpetH};
             }
         }
-
         return new int[0];
     }
 }
